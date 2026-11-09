@@ -1,0 +1,72 @@
+# KUN-DB 主代码仓库：只保存可编译源码、公开文档与合规文件。
+# 官网是独立仓库（kundb-web），按「A 双仓库」方案不纳入本仓库。
+website/
+
+# ---- 构建产物与二进制 ----
+build/
+dist/
+target/
+**/target/
+**/build/
+kundb-qt/build/
+node_modules/
+*.class
+*.jar
+*.war
+dependency-reduced-pom.xml
+*.exe
+*.dll
+*.so
+*.dylib
+*.obj
+*.o
+*.msi
+*.wixpdb
+*.zip
+*.7z
+*.log
+*.pid
+
+# ---- 本地工程工具链与课程材料（含本机路径、内部台账，不公开）----
+dev-tools/
+midterm/
+docs/report/
+docs/*模版*
+docs/开发要求.md
+docs/中期检查.md
+docs/功能实现对照表.md
+docs/KUN-DB-服务端代码.md
+docs/dbms实现方案对比.docx
+start-kundb.bat
+run-test-client.bat
+
+# ---- 运行期数据、凭证与本地状态 ----
+kundb-data/
+kundb-data-*/
+*.kdb
+users.json
+_views.json
+kundb.port
+bg-launcher.properties
+.env
+.env.*
+!.env.example
+*.jks
+*.p12
+*.pem
+*.key
+
+# ---- IDE / 编辑器 / 操作系统 ----
+.idea/
+.vscode/
+.qtcreator/
+.workbuddy/
+*.iml
+.project
+.classpath
+*.swp
+.DS_Store
+Thumbs.db
+ehthumbs.db
+*.bak
+*~
