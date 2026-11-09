@@ -81,13 +81,13 @@ cmake -S kundb-qt -B kundb-qt/build && cmake --build kundb-qt/build
 ## 安装包与版本
 
 二进制产物（MSI 安装版、便携版 ZIP、Qt 客户端 ZIP）**只通过 GitHub Releases 发布**，
-不纳入 Git 历史，也不放在仓库目录里。三条发布线版本号互相独立、tag 前缀区分：
+不纳入 Git 历史，也不放在仓库目录里。三条发布线版本号互相独立，tag 统一带 `kundb-` 前缀区分：
 
 | 发布线 | 当前版本 | tag | 产物 |
 |---|---|---|---|
-| 主发行（内核 + MSI） | 1.1.1 | `v1.1.1` | `KUN-DB-1.1.1.msi` |
-| 便携版 | 1.1.1 | `portable-v1.1.1` | `KUN-DB-1.1.1-portable.zip` |
-| Qt 桌面客户端 | **1.0.0（独立版本线）** | `qt-v1.0.0` | `KUN-DB-QtClient-1.0.0.zip` |
+| 主发行（内核 + MSI） | 1.1.1 | `kundb-v1.1.1` | `KUN-DB-1.1.1.msi` |
+| 便携版 | 1.1.1 | `kundb-portable-v1.1.1` | `KUN-DB-1.1.1-portable.zip` |
+| Qt 桌面客户端 | **1.0.0（独立版本线）** | `kundb-qt-v1.0.0` | `KUN-DB-QtClient-1.0.0.zip` |
 
 Qt 客户端的版本号**不跟随**内核版本，只有客户端自身改动才升版。
 完整规则、升版清单与发布步骤见 [RELEASES.md](RELEASES.md)，

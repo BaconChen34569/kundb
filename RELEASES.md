@@ -1,15 +1,18 @@
 # 发布与版本规则
 
 二进制产物**只通过 GitHub Releases 分发**，不进 Git、不进仓库目录。
-本仓库采用**三条互相独立的发布线**，用 tag 前缀区分，各自建一个 Release、各自只挂自己的资产。
+本仓库采用**三条互相独立的发布线**，各自建一个 Release、各自只挂自己的资产。
+**所有 tag 一律带 `kundb-` 前缀**，用于在同一个仓库里明确标注属于 KUN-DB 的哪个发布通道。
 
 ## 一、三条发布线
 
 | 发布线 | 版本来源 | 当前版本 | tag | Release 标题 | 唯一资产 | 官网 channel |
 |---|---|---|---|---|---|---|
-| **主发行**（内核 + MSI 安装版） | Maven `pom.xml` | `1.1.1` | `v1.1.1` | `KUN-DB v1.1.1 — 服务端与 Windows 安装版` | `KUN-DB-1.1.1.msi` | `MSI` |
-| **便携版**（跨平台 ZIP） | 跟随主版本，但独立 tag | `1.1.1` | `portable-v1.1.1` | `KUN-DB 便携版 v1.1.1` | `KUN-DB-1.1.1-portable.zip` | `PORTABLE` |
-| **Qt 桌面客户端**（独立 ZIP） | **独立版本线** | `1.0.0` | `qt-v1.0.0` | `KUN-DB Qt 桌面客户端 v1.0.0` | `KUN-DB-QtClient-1.0.0.zip` | `QT` |
+| **主发行**（内核 + MSI 安装版） | Maven `pom.xml` | `1.1.1` | `kundb-v1.1.1` | `KUN-DB v1.1.1 — 服务端与 Windows 安装版` | `KUN-DB-1.1.1.msi` | `MSI` |
+| **便携版**（跨平台 ZIP） | 跟随主版本，但独立 tag | `1.1.1` | `kundb-portable-v1.1.1` | `KUN-DB 便携版 v1.1.1` | `KUN-DB-1.1.1-portable.zip` | `PORTABLE` |
+| **Qt 桌面客户端**（独立 ZIP） | **独立版本线** | `1.0.0` | `kundb-qt-v1.0.0` | `KUN-DB Qt 桌面客户端 v1.0.0` | `KUN-DB-QtClient-1.0.0.zip` | `QT` |
+
+tag 命名格式：`kundb-<通道->v<语义化版本>`，即 `kundb-v1.1.1` / `kundb-portable-v1.1.1` / `kundb-qt-v1.0.0`。
 
 产物在构建机上的相对路径：`build/msi/`、`build/portable/`、`build/qt-client/`。
 官网 `application.yml` 的 `file:` 也是相对 `site.releases-dir` 的这几条路径，`file-name:` 保持裸文件名。
@@ -19,7 +22,7 @@
 - **Qt 客户端是独立产品**：它只是通过线协议连服务端，`kundb-qt/` 代码不变就不升版。
   所以 Qt 客户端是 `1.0.0`，而内核已是 `1.1.1` —— 这是两条版本线，**不是漏更新**。
 - **便携版与内核同版本，但独立 tag**：每次内核发布都同步产出同号便携版；
-  用 `portable-` 前缀避免和主发行 `v1.1.1` 抢同一个 tag / 同一个 Release。
+  用 `kundb-portable-` 前缀避免和主发行 `kundb-v1.1.1` 抢同一个 tag / 同一个 Release。
 - **一个 Release 只挂一个资产**：不要把 MSI、便携 ZIP、Qt ZIP 塞进同一个 Release，
   否则下载页和 Releases 页面会出现「1.1.1 里混着 1.0.0 的客户端」这类歧义。
 
@@ -27,9 +30,9 @@
 
 | 改动内容 | 升级哪条线 | 是否联动 |
 |---|---|---|
-| 内核 SQL / 事务 / 存储 / 协议改动 | `vX.Y.Z` | 便携版同步产出 `portable-vX.Y.Z`；Qt 客户端**不动** |
-| 仅便携版启动器、打包内容变化 | `portable-vX.Y.Z`（可只出修订版） | 主发行不必动 |
-| `kundb-qt/` 客户端代码变化 | `qt-vA.B.C` | 内核与便携版**不动** |
+| 内核 SQL / 事务 / 存储 / 协议改动 | `kundb-vX.Y.Z` | 便携版同步产出 `kundb-portable-vX.Y.Z`；Qt 客户端**不动** |
+| 仅便携版启动器、打包内容变化 | `kundb-portable-vX.Y.Z`（可只出修订版） | 主发行不必动 |
+| `kundb-qt/` 客户端代码变化 | `kundb-qt-vA.B.C` | 内核与便携版**不动** |
 | 仅官网文案、文档变化 | 不升任何二进制版本 | 更新官网仓库即可 |
 
 语义化版本：不兼容变更升主版本，新增能力升次版本，修复升修订号。
@@ -45,22 +48,25 @@
 4. 官网 `application.yml`：`site.version`，以及 `MSI` / `PORTABLE` 各条目的
    `version`、`file`、`file-name`、`title`、`title-en`。
 5. Qt 客户端 ZIP 的文件名与 `QT` 条目的 `version` / `file` / `file-name`，
-   按 `qt-vA.B.C` 单独核对，**不要**误填成内核版本。
+   按 `kundb-qt-vA.B.C` 单独核对，**不要**误填成内核版本。
 6. `CHANGELOG.md` 与 `releases/notes/` 增加对应条目。
 
 ## 四、发布步骤
 
 ```bash
 # 1. 三条线各自打 tag（可指向同一提交，也可各自指向对应发布提交）
-git tag -a v1.1.1          -m "KUN-DB v1.1.1"
-git tag -a portable-v1.1.1 -m "KUN-DB portable v1.1.1"
-git tag -a qt-v1.0.0       -m "KUN-DB Qt client v1.0.0"
-git push origin v1.1.1 portable-v1.1.1 qt-v1.0.0
+git tag -a kundb-v1.1.1          -m "KUN-DB v1.1.1 主发行（内核 + Windows 安装版）"
+git tag -a kundb-portable-v1.1.1 -m "KUN-DB 便携版 v1.1.1"
+git tag -a kundb-qt-v1.0.0       -m "KUN-DB Qt 桌面客户端 v1.0.0（独立版本线）"
+git push origin kundb-v1.1.1 kundb-portable-v1.1.1 kundb-qt-v1.0.0
 ```
 
-> **tag ≠ Release**：`git push origin <tag>` 只创建标签，不会生成 Releases 页面。
-> 本机没有 `gh` CLI 时，需到仓库 Releases 页面点 **Create a new release**，
-> 逐个选对应 tag、填标题、贴 `releases/notes/` 里的说明正文、上传对应资产，再发布。
+> **tag ≠ Release**：`git push origin <tag>` 只是把一个 Git 引用推到远端，
+> GitHub 会为该 tag 自动生成 **Source code (zip / tar.gz)** 源码归档，
+> 但**不会**创建 Releases 页面条目，更不会带上 MSI / ZIP 安装包。
+> tag 存在之后，还须创建 Release——网页端 Releases → **Draft a new release**，
+> 或用 `gh release create` / GitHub REST API `POST /repos/{owner}/{repo}/releases`
+> 指定 `tag_name`，再把对应资产上传到该 Release。两者是先后两步，不能互相替代。
 
 每个 Release 的建议写法：
 
@@ -86,4 +92,4 @@ git push origin v1.1.1 portable-v1.1.1 qt-v1.0.0
 
 - 新增一条对应 channel 的 release 条目，填好 `version` / `file` / `file-name` / `title` / `changelog`；
 - `sort-order` 控制倒序展示；`release-date` 用 `YYYY-MM-DD`；
-- Qt 条目的 `version` 永远填 `qt-vA.B.C` 的号，**不填内核版本**。
+- Qt 条目的 `version` 永远填 `kundb-qt-vA.B.C` 的号，**不填内核版本**。

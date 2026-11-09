@@ -1,6 +1,6 @@
 # KUN-DB v1.1.1 — 服务端与 Windows 安装版
 
-发布线：主发行 `vX.Y.Z` | 发布日期：2026-10-17 | 资产：`KUN-DB-1.1.1.msi`
+发布线：主发行 `kundb-vX.Y.Z` | 发布日期：2026-10-17 | 资产：`KUN-DB-1.1.1.msi`
 
 ## 本次变更
 
@@ -18,8 +18,8 @@
 
 - 升级前建议备份 `kundb-data` 目录。
 - 安装向导中「Qt 桌面客户端」为可选功能；未勾选的用户可单独下载
-  `qt-v1.0.0` 的独立客户端 ZIP。
-- 便携版请下载同一版本号下的 `portable-v1.1.1` Release，不在本 Release 内。
+  `kundb-qt-v1.0.0` 的独立客户端 ZIP。
+- 便携版请下载同一版本号下的 `kundb-portable-v1.1.1` Release，不在本 Release 内。
 
 ## 相关链接
 

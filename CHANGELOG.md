@@ -3,39 +3,39 @@
 KUN-DB 有**三条互相独立的发布线**，版本号与 tag 规则见 [RELEASES.md](RELEASES.md)。
 本文件按发布线分别记录；每条线的详细变更说明见 `releases/notes/` 与 GitHub Releases。
 
-## 主发行线 `vX.Y.Z`（内核 + Windows 安装版 MSI）
+## 主发行线 `kundb-vX.Y.Z`（内核 + Windows 安装版 MSI）
 
-### v1.1.1 — 2026-10-17
+### kundb-v1.1.1 — 2026-10-17
 
 - 内部代码清理（修订版本）：删除三处无调用的死代码
 - `SHOW [FULL] COLUMNS` 元数据列定义合并为一份，去除重复
 - 存储格式与 1.0.x / 1.1.0 完全兼容；升级前建议备份 `kundb-data` 目录
 
-### v1.1.0 / v1.0.1 / v1.0.0
+### kundb-v1.1.0 / kundb-v1.0.1 / kundb-v1.0.0
 
 历史版本，主要内容为安装包与服务化能力迭代。逐版本说明见官网更新日志页，
 以及后续补建的对应 Release。
 
-## 便携版线 `portable-vX.Y.Z`（跨平台 ZIP）
+## 便携版线 `kundb-portable-vX.Y.Z`（跨平台 ZIP）
 
 与主发行线**同版本号、独立 tag**，每次主版本发布时同步产出。
 
-### portable-v1.1.1 — 2026-10-17
+### kundb-portable-v1.1.1 — 2026-10-17
 
 - 与 1.1.1 安装版同一份构建，存储格式与 1.0.x / 1.1.0 兼容
 - 内部代码清理（删除死代码、元数据去重），无功能变更
 - 启动器同步到 1.1.1（`bat` / `sh` 均指向新版 jar）
 
-### portable-v1.1.0 / portable-v1.0.0
+### kundb-portable-v1.1.0 / kundb-portable-v1.0.0
 
 历史版本，随对应主版本发布。
 
-## Qt 客户端线 `qt-vA.B.C`（独立版本线）
+## Qt 客户端线 `kundb-qt-vA.B.C`（独立版本线）
 
 Qt 客户端版本号**不跟随**内核版本：只有 `kundb-qt/` 自身代码变化时才升 `A.B.C`。
 因此当前是 **1.0.0**，而内核已是 1.1.1，两者并不矛盾。
 
-### qt-v1.0.0 — 2026-09-23
+### kundb-qt-v1.0.0 — 2026-09-23
 
 - 独立 Qt 桌面客户端：安装向导里未勾选「Qt 客户端」的用户可单独下载
 - 自带全部 Qt 运行时（Qt6Core/Gui/Network/Widgets、MinGW 三件套）与 `platforms/qwindows.dll`
